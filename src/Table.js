@@ -43,6 +43,41 @@ const Table = () => {
       category: "Clothing",
       quantity: "50",
     },
+    {
+      id: 6,
+      name: "Samsung Watch",
+      price: "₦270,000",
+      category: "Accessories",
+      quantity: "7",
+    },
+    {
+      id: 7,
+      name: "Yoga mat",
+      price: "₦15,000",
+      category: "Fitness",
+      quantity: "15",
+    },
+    {
+      id: 8,
+      name: "Jumpsuit",
+      price: "₦15,700",
+      category: "Clothing",
+      quantity: "30",
+    },
+    {
+      id: 9,
+      name: "Hand mixer",
+      price: "₦50,000",
+      category: "Electronics",
+      quantity: "10",
+    },
+    {
+      id: 10,
+      name: "Pallazo",
+      price: "₦12,000",
+      category: "Clothing",
+      quantity: "4",
+    },
   ];
 
   const header = <p>All Products</p>;
@@ -59,6 +94,7 @@ const Table = () => {
   const dialogFooterTemplate = (
     <Button label="Ok" icon="pi pi-check" onClick={closeDialog} />
   );
+  
   return (
     <div className="table-wrapper">
       <h2 className="table-name">PrimeReact data table</h2>
@@ -84,11 +120,16 @@ const Table = () => {
           size="small"
           showGridlines
           stripedRows
-          dataKey="id">
-          <Column field="name" header="Name"></Column>
-          <Column field="price" header="Price"></Column>
-          <Column field="category" header="Category"></Column>
-          <Column field="quantity" header="Quantity"></Column>
+          dataKey="id"
+          removableSort
+          paginator
+          paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks
+        NextPageLink LastPageLink"
+          rows={5}>
+          <Column field="name" header="Name" sortable></Column>
+          <Column field="price" header="Price" sortable></Column>
+          <Column field="category" header="Category" sortable></Column>
+          <Column field="quantity" header="Quantity" sortable></Column>
         </DataTable>
       </Dialog>
     </div>
