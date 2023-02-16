@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Rating } from "primereact/rating";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 
 const Table = () => {
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [dialogVisible, setDialogVisible] = useState(false);
 
   const products = [
@@ -14,6 +16,7 @@ const Table = () => {
       price: "₦350,000",
       category: "Accessories",
       quantity: "7",
+      rating: "5",
     },
     {
       id: 2,
@@ -21,6 +24,7 @@ const Table = () => {
       price: "₦10,000",
       category: "Fitness",
       quantity: "23",
+      rating: "2",
     },
     {
       id: 3,
@@ -28,6 +32,7 @@ const Table = () => {
       price: "₦25,000",
       category: "Clothing",
       quantity: "5",
+      rating: "4",
     },
     {
       id: 4,
@@ -35,6 +40,7 @@ const Table = () => {
       price: "₦260,000",
       category: "Electronics",
       quantity: "10",
+      rating: "4",
     },
     {
       id: 5,
@@ -42,6 +48,7 @@ const Table = () => {
       price: "₦10,000",
       category: "Clothing",
       quantity: "50",
+      rating: "5",
     },
     {
       id: 6,
@@ -49,6 +56,7 @@ const Table = () => {
       price: "₦270,000",
       category: "Accessories",
       quantity: "7",
+      rating: "3",
     },
     {
       id: 7,
@@ -56,6 +64,7 @@ const Table = () => {
       price: "₦15,000",
       category: "Fitness",
       quantity: "15",
+      rating: "4",
     },
     {
       id: 8,
@@ -63,6 +72,7 @@ const Table = () => {
       price: "₦15,700",
       category: "Clothing",
       quantity: "30",
+      rating: "5",
     },
     {
       id: 9,
@@ -70,6 +80,7 @@ const Table = () => {
       price: "₦50,000",
       category: "Electronics",
       quantity: "10",
+      rating: "4",
     },
     {
       id: 10,
@@ -77,11 +88,16 @@ const Table = () => {
       price: "₦12,000",
       category: "Clothing",
       quantity: "4",
+      rating: "3",
     },
   ];
 
   const header = <p>All Products</p>;
   const footer = <p>Total products = {products ? products.length : 0}</p>;
+
+  const ratingBodyTemplate = (rowData) => {
+    return <Rating value={rowData.rating} readOnly cancel={false} />;
+  };
 
   const openDialog = () => {
     setDialogVisible(true);
@@ -94,7 +110,7 @@ const Table = () => {
   const dialogFooterTemplate = (
     <Button label="Ok" icon="pi pi-check" onClick={closeDialog} />
   );
-  
+
   return (
     <div className="table-wrapper">
       <h2 className="table-name">PrimeReact data table</h2>
@@ -115,21 +131,32 @@ const Table = () => {
         <DataTable
           value={products}
           responsiveLayout="scroll"
-          header={header}
-          footer={footer}
           size="small"
           showGridlines
           stripedRows
-          dataKey="id"
+          header={header}
+          footer={footer}
           removableSort
           paginator
           paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks
         NextPageLink LastPageLink"
-          rows={5}>
-          <Column field="name" header="Name" sortable></Column>
+          rows={5}
+          selection={selectedProduct}
+          onSelectionChange={(e) => setSelectedProduct(e.value)}
+          dataKey="id">
+          <Column
+            selectionMode="multiple"
+            field="name"
+            header="Name"
+            sortable></Column>
           <Column field="price" header="Price" sortable></Column>
           <Column field="category" header="Category" sortable></Column>
           <Column field="quantity" header="Quantity" sortable></Column>
+          <Column
+            field="rating"
+            header="Rating"
+            body={ratingBodyTemplate}
+            sortable></Column>
         </DataTable>
       </Dialog>
     </div>
